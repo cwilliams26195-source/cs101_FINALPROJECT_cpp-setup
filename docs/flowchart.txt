@@ -1,0 +1,71 @@
+                        +-----------------------+
+                        |         START         |
+                        | Load 5 sports & empty |
+                        | student list          |
+                        +-----------+-----------+
+                                    |
+                                    v
+                        +-----------------------+
+                        | Show Main Menu (1-5)  |
+                        | & Read User Choice    |
+                        +-----------+-----------+
+                                    |
+          +-------------------------+-------------------------+
+          |                         |                         |
+          v                         v                         v
+   [choice == 1?]            [choice == 2?]            [choice == 3?]
+    Register Student          View All Students         Search by ID
+          |                         |                         |
+          v                         v                         v
+  Read name, id, age,       +---------------+         +---------------+
+  sportNum (1-5)            | List empty?   |         | ID blank or   |
+          |                 +-------+-------+         | spaces only?  |
+          v                         |                 +-------+-------+
+  +---------------+         Yes /   \ No                  |
+  | Name/ID blank |          /     \                Yes /   \ No
+  | or spaces?    |         v       v                  /     \
+  +-------+-------+  [Print "No    [Loop & print       v       v
+          |          students"]   all students]  [Print   [Loop & check
+    Yes /   \ No                                  error]    student.id]
+       /     \                                                |
+      v       v                                         +-----+-----+
+ [Print   +---------------+                             | Found?    |
+  error]  | ID already    |                             +-----+-----+
+          | exists?       |                                   |
+          +-------+-------+                             Yes /   \ No
+                  |                                      /     \
+            Yes /   \ No                                v       v
+               /     \                           [Print    [Print
+              v       v                          student   "Not found"]
+         [Print   +---------------+             details]
+          error]  | Age 5-25 and  |
+                  | sportNum 1-5? |
+                  +-------+-------+
+                          |
+                    Yes /   \ No
+                       /     \
+                      v       v
+              [Add Student   [Print
+               to list &      error]
+               confirm]
+          |                         |                         |
+          +-------------------------+-------------------------+
+                                    |
+          +-------------------------+-------------------------+
+          |                                                   |
+          v                                                   v
+   [choice == 4?]                                      [choice == 5?]
+   Sport Summary                                            Exit
+          |                                                   |
+          v                                                   v
+  Count total students                                 +---------------+
+  & count each of the 5                                | choice == 5?  |
+  sports (Basketball,                                  +-------+-------+
+  Football, Volleyball,                                      |
+  Softball, Track/Field)                               Yes /   \ No
+          |                                                 /     \
+          v                                                v       v
+  Print total & per-sport                         [Print "Goodbye!"] [Print "Invalid
+  counts                                            & END program    choice" & loop
+          |                                                          back to menu]
+          +---------------------------------------------------+

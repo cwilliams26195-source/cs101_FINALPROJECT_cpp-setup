@@ -1,0 +1,90 @@
+START
+    SET sports = ["Basketball", "Football", "Volleyball", "Softball", "Track and Field"]
+    CREATE empty list of students
+    SET choice = 0
+
+    REPEAT
+        DISPLAY menu:
+            1. Register student
+            2. View all students
+            3. Search student by ID
+            4. Registration summary
+            5. Exit
+        READ choice (must be a whole number from 1 to 5)
+
+        IF choice == 1 THEN
+            READ name
+            READ id
+            READ age
+            DISPLAY sports list (1 to 5)
+            READ sportNum
+
+            IF name is empty OR name has only spaces THEN
+                DISPLAY "Error: Name cannot be blank."
+            ELSE IF id is empty OR id has only spaces THEN
+                DISPLAY "Error: Student ID cannot be blank."
+            ELSE IF id already exists in students THEN
+                DISPLAY "Error: Student ID already exists."
+            ELSE IF age < 5 OR age > 25 THEN
+                DISPLAY "Error: Age must be between 5 and 25."
+            ELSE IF sportNum < 1 OR sportNum > 5 THEN
+                DISPLAY "Error: Pick a sport from 1 to 5."
+            ELSE
+                SET chosenSport = sports[sportNum - 1]
+                CREATE Student(name, id, age, chosenSport)
+                ADD student to students list
+                DISPLAY "Registered " + name + " in " + chosenSport
+            END IF
+
+        ELSE IF choice == 2 THEN
+            IF students list is empty THEN
+                DISPLAY "No students registered yet."
+            ELSE
+                FOR each student in students list DO
+                    DISPLAY student id, name, age, and sport
+                END FOR
+            END IF
+
+        ELSE IF choice == 3 THEN
+            READ searchId
+            IF searchId is empty OR searchId has only spaces THEN
+                DISPLAY "Error: Enter an ID to search."
+            ELSE
+                SET found = FALSE
+                FOR each student in students list DO
+                    IF student.id == searchId THEN
+                        DISPLAY student id, name, age, and sport
+                        SET found = TRUE
+                        BREAK
+                    END IF
+                END FOR
+                IF found == FALSE THEN
+                    DISPLAY "No student found with ID: " + searchId
+                END IF
+            END IF
+
+        ELSE IF choice == 4 THEN
+            SET counts = [0, 0, 0, 0, 0]
+            FOR each student in students list DO
+                FOR index i from 0 to 4 DO
+                    IF student.sport == sports[i] THEN
+                        counts[i] = counts[i] + 1
+                        BREAK
+                    END IF
+                END FOR
+            END FOR
+
+            DISPLAY "Total students: " + length of students list
+            FOR index i from 0 to 4 DO
+                DISPLAY sports[i] + ": " + counts[i]
+            END FOR
+
+        ELSE IF choice == 5 THEN
+            DISPLAY "Goodbye!"
+
+        ELSE
+            DISPLAY "Invalid choice."
+        END IF
+
+    UNTIL choice == 5
+END
