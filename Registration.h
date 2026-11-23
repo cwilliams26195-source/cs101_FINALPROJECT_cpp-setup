@@ -1,19 +1,32 @@
+
 #include "Student.h"
 #include <array>
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Registration {
 private:
-    std::array<std::string, 5> sports;
-    std::vector<Student> list;
-    bool onlySpaces(const std::string& text) const;
+    array<string, 5> sports = {
+        "Basketball",
+        "Football",
+        "Volleyball",
+        "Softball",
+        "Track and Field"
+    };
+    vector<Student> list;
+
+    int emptyInput(string s);
+    int dupeId(string id);
 
 public:
     Registration();
-    void showSports() const;
-    void addStudent(const std::string& name, const std::string& id, int age, int sportNum);
-    void showAll() const;
-    void findStudent(const std::string& id) const;
-    void showSummary() const;
+
+    void printSports();
+    void addStudent(string name, string id, int age, int pick);
+    void showList();
+    void findStudent(string id);
+    void summary();
 };
+

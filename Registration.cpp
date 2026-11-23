@@ -4,104 +4,116 @@
 using namespace std;
 
 Registration::Registration() {
-    sports = {"Basketball", "Football", "Volleyball", "Softball", "Track and Field"};
 }
 
-bool Registration::onlySpaces(const string& text) const {
-    for (int i = 0; i < (int)text.size(); i++) {
-        if (text[i] != ' ') {
-            return false;
-        }
+int Registration::emptyInput(string s) {
+    if (s.empty()) {
+        return 1;
     }
-    return true;
+    if (s.find_first_not_of(" ") == string::npos) {
+        return 1;
+    }
+    return 0;
 }
 
-void Registration::showSports() const {
-    cout << "\nSports:\n";
-    for (int i = 0; i < 5; i++) {
-        cout << (i + 1) << ". " << sports[i] << endl;
-    }
-}
-
-void Registration::addStudent(const string& name, const string& id, int age, int sportNum) {
-    if (name.empty() || onlySpaces(name)) {
-        cout << "Error: Name cannot be blank.\n";
-        return;
-    }
-
-    if (id.empty() || onlySpaces(id)) {
-        cout << "Error: Student ID cannot be blank.\n";
-        return;
-    }
-
+int Registration::dupeId(string id) {
     for (int i = 0; i < (int)list.size(); i++) {
         if (list[i].getId() == id) {
-            cout << "Error: Student ID already exists.\n";
-            return;
+            return 1;
         }
+    }
+    return 0;
+}
+
+void Registration::printSports() {
+    cout << "\nSports:\n";
+    for (int i = 0; i < 5; i++) {
+        cout << (i + 1) << ". " << sports[i] << "\n";
+    }
+}
+
+void Registration::addStudent(string name, string id, int age, int pick) {
+    if (emptyInput(name) == 1) {
+        cout << "Name cannot be empty.\n";
+        return;
+    }
+
+    if (emptyInput(id) == 1) {
+        cout << "ID cannot be empty.\n";
+        return;
+    }
+
+    if (dupeId(id) == 1) {
+        cout << "That ID is already used.\n";
+        return;
     }
 
     if (age < 5 || age > 25) {
-        cout << "Error: Age must be between 5 and 25.\n";
+        cout << "Age must be from 5 to 25.\n";
         return;
     }
 
-    if (sportNum < 1 || sportNum > 5) {
-        cout << "Error: Pick a sport from 1 to 5.\n";
+    if (pick < 1 || pick > 5) {
+        cout << "Pick a number from 1 to 5.\n";
         return;
     }
 
-    string chosenSport = sports[sportNum - 1];
-    Student s(name, id, age, chosenSport);
-    list.push_back(s);
-    cout << "Registered " << name << " in " << chosenSport << ".\n";
+    string chosen = sports[pick - 1];
+    Student st(name, id, age, chosen);
+    list.push_back(st);
+
+    cout << "Added " << name << " to " << chosen << ".\n";
 }
 
-void Registration::showAll() const {
+void Registration::showList() {
     if (list.empty()) {
-        cout << "\nNo students registered yet.\n";
+        cout << "\nNo students yet.\n";
         return;
     }
 
-    cout << "\n--- All Registered Students ---\n";
+    cout << "\n--- Students ---\n";
     for (int i = 0; i < (int)list.size(); i++) {
-        cout << (i + 1) << ". ";
-        list[i].print();
+        cout << (i + 1) << ") " << list[i].getId()
+             << " - " << list[i].getName()
+             << " (Age " << list[i].getAge() << ") - "
+             << list[i].getSport() << "\n";
     }
 }
 
-void Registration::findStudent(const string& id) const {
-    if (id.empty() || onlySpaces(id)) {
-        cout << "Error: Enter an ID to search.\n";
+void Registration::findStudent(string id) {
+    if (emptyInput(id) == 1) {
+        cout << "Enter an ID first.\n";
         return;
     }
 
     for (int i = 0; i < (int)list.size(); i++) {
         if (list[i].getId() == id) {
             cout << "\nFound:\n";
-            list[i].print();
+            cout << "ID: " << list[i].getId() << "\n";
+            cout << "Name: " << list[i].getName() << "\n";
+            cout << "Age: " << list[i].getAge() << "\n";
+            cout << "Sport: " << list[i].getSport() << "\n";
             return;
         }
     }
 
-    cout << "No student found with ID: " << id << endl;
+    cout << "ID not found.\n";
 }
 
-void Registration::showSummary() const {
-    array<int, 5> counts = {0, 0, 0, 0, 0};
+void Registration::summary() {
+    int totals[5] = {0, 0, 0, 0, 0};
 
     for (int i = 0; i < (int)list.size(); i++) {
         for (int j = 0; j < 5; j++) {
             if (list[i].getSport() == sports[j]) {
-                counts[j]++;
-                break;
+                totals[j] = totals[j] + 1;
             }
         }
     }
 
     cout << "\n--- Summary ---\n";
-    cout << "Total students: " << list.size() << endl;
+    cout << "Total students: " << list.size() << "\n";
     for (int i = 0; i < 5; i++) {
-        cout << sports[i] << ": " << counts[i] << endl;
+        cout << sports[i] << ": " << totals[i] << "\n";
     }
 }

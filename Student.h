@@ -1,17 +1,20 @@
 #include <string>
+using namespace std;
 
 class Student {
 private:
-    std::string name;
-    std::string id;
+    string name;
+    string id;
     int age;
-    std::string sport;
+    string sport;
 
 public:
     Student();
-    Student(std::string name, std::string id, int age, std::string sport);
+    Student(string n, string i, int a, string s);
 
-    std::string getId() const;
-    std::string getSport() const;
-    void print() const;
+    string getName();
+    string getId();
+    int getAge();
+    string getSport();
 };
+

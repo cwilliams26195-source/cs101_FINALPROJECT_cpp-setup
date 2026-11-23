@@ -1,7 +1,4 @@
 #include "Student.h"
-#include <iostream>
-
-using namespace std;
 
 Student::Student() {
     name = "";
@@ -10,24 +7,25 @@ Student::Student() {
     sport = "";
 }
 
-Student::Student(string name, string id, int age, string sport) {
-    this->name = name;
-    this->id = id;
-    this->age = age;
-    this->sport = sport;
+Student::Student(string n, string i, int a, string s) {
+    name = n;
+    id = i;
+    age = a;
+    sport = s;
 }
 
-string Student::getId() const {
+string Student::getName() {
+    return name;
+}
+
+string Student::getId() {
     return id;
 }
 
-string Student::getSport() const {
-    return sport;
+int Student::getAge() {
+    return age;
 }
 
-void Student::print() const {
-    cout << "ID: " << id
-         << " | Name: " << name
-         << " | Age: " << age
-         << " | Sport: " << sport << endl;
+string Student::getSport() {
+    return sport;
 }
